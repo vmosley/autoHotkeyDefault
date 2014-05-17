@@ -25,12 +25,27 @@ RAlt::RCtrl
 ;Shift & BS::Send {Left}
 ;Alt & CapsLock::Send {Left}
 
-LAlt & H::Send {Left}
-LAlt & L::Send {Right}
+!+h::Send, +{Left}
+;LAlt & H::Send {Left}
+<!<+h::Send, +{Left}
+<!h::Send, {Left}
+
+;LAlt & L::Send {Right}
+<!<+l::Send, +{Right}
+<!l::Send, {Right}
+
+;LAlt & r::Send {Up}
+<!<+r::Send, +{Up}
+<!r::Send, {Up}
+
+;LAlt & c::Send {Down}
+<!<+c::Send, +{Down}
+<!c::Send, {Down}
+
 ;LAlt & ]::Send {Up}
 ;LAlt & +::Send {Down}
-LAlt & r::Send {Up}
-LAlt & c::Send {Down}
+
+
 LAlt & +::Send {BS}
 LCtrl & ]::Send {Enter}
 
@@ -126,7 +141,9 @@ return
 ;	Run Notepad
 ;return
 
-
+#h::#Left
+#r::#Right
+;#l::Send {#Right} ;this will not work, winkey+l and winkey+u cannot be overriden 
 #.::Run explorer.exe C:\inbox
 #e::Run explorer.exe C:\inbox
 
