@@ -53,7 +53,7 @@ F9::Left
 F10::Down
 F11::Up
 F12::Right
-Shift & Space::Send {Right}
+;Shift & Space::Send {Right}
 
 LCtrl & L::Send {End}
 LCtrl & H::Send {Home}
