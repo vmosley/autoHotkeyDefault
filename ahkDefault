@@ -19,26 +19,31 @@
 RCtrl::RAlt
 RAlt::RCtrl
 
+
 ;BackSpace::Capslock
 ;CapsLock::BackSpace
 
 ;Shift & BS::Send {Left}
 ;Alt & CapsLock::Send {Left}
 
-!+h::Send, +{Left}
+;!+h::Send, +{Left}
 ;LAlt & H::Send {Left}
 <!<+h::Send, +{Left}
 <!h::Send, {Left}
-
 ;LAlt & L::Send {Right}
 <!<+l::Send, +{Right}
 <!l::Send, {Right}
 
-;LAlt & r::Send {Up}
+;Word move
+;!^h::Send, ^{Left}
+;!^l::Send, ^{Right}
+
+;LAlt & r::Send, {Up}
 <!<+r::Send, +{Up}
 <!r::Send, {Up}
 
-;LAlt & c::Send {Down}
+LShift & Space::Send, ^{Right}
+;LAlt & c::Send, {Down}
 <!<+c::Send, +{Down}
 <!c::Send, {Down}
 
@@ -63,8 +68,9 @@ Shift & Enter::Send {End}{Enter}
 !c::Send, +{Home}
 ;RAlt & $::Send +{Home}
 ;RAlt & &::Send {End}
-LCtrl & )::Send {Left}
-LAlt & )::Send +{Left}
+;LCtrl & )::Send ^{Left}
+LAlt & )::Send ^{Left}
+LAlt & ]::Send ^{Right}
 LCtrl & +::Send ^{BS}
 
 ;LCtrl & ]::Send +{Up}
@@ -143,6 +149,7 @@ return
 
 #h::#Left
 #r::#Right
+#c::#Up
 ;#l::Send {#Right} ;this will not work, winkey+l and winkey+u cannot be overriden 
 #.::Run explorer.exe C:\inbox
 #e::Run explorer.exe C:\inbox
