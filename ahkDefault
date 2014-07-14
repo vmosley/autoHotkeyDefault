@@ -13,79 +13,64 @@
 ; and it launches a new Notepad window (or activates an existing one).  To
 ; try out these hotkeys, run AutoHotkey again, which will load this file.
 
-;#z::Run www.autohotkey.com
-#SingleInstance force
-
-RCtrl::RAlt
-RAlt::RCtrl
+;defaults
+	;#z::Run www.autohotkey.com
+	#SingleInstance force
 
 
-;BackSpace::Capslock
-;CapsLock::BackSpace
+;Insert now equals Tab
+	insert::tab
 
-;Shift & BS::Send {Left}
-;Alt & CapsLock::Send {Left}
+;Swap right-side alt and ctrl
+	RCtrl::RAlt
+	RAlt::RCtrl
 
-;!+h::Send, +{Left}
-;LAlt & H::Send {Left}
-<!<+h::Send, +{Left}
-<!h::Send, {Left}
-;LAlt & L::Send {Right}
-<!<+l::Send, +{Right}
-<!l::Send, {Right}
+;Home and End
+	LCtrl & L::Send {End}
+	LCtrl & H::Send {Home}
 
-;Word move
-;!^h::Send, ^{Left}
-;!^l::Send, ^{Right}
+;Backspace and Enter
+	LAlt & +::Send {BS}
+	LCtrl & ]::Send {Enter}
 
-;LAlt & r::Send, {Up}
-<!<+r::Send, +{Up}
-<!r::Send, {Up}
+;Ctrl Backspace (key 9)
+	LCtrl & +::Send ^{BS}
 
-LShift & Space::Send, ^{Right}
-;LAlt & c::Send, {Down}
-<!<+c::Send, +{Down}
-<!c::Send, {Down}
+;Basic Arrows1
+	F9::Left
+	F10::Down
+	F11::Up
+	F12::Right
 
-;LAlt & ]::Send {Up}
-;LAlt & +::Send {Down}
+;Basic Arrows2
+	<!h::Send, {Left}
+	<!l::Send, {Right}
+	<!r::Send, {Up}
+	<!c::Send, {Down}
+	;LShift & Space::Send, ^{Right}
 
+	
+;Highlight Arrows
+	<!<+h::Send, +{Left}
+	<!<+l::Send, +{Right}
+	<!<+r::Send, +{Up}
+	<!<+c::Send, +{Down}
 
-LAlt & +::Send {BS}
-LCtrl & ]::Send {Enter}
+;Move caret by word
+	LAlt & )::Send ^{Left}
+	LAlt & ]::Send ^{Right}
+	;!^h::Send, ^{Left}
+	;!^l::Send, ^{Right}
 
-F9::Left
-F10::Down
-F11::Up
-F12::Right
-;Shift & Space::Send {Right}
+;Start Blank Line below
+	Shift & Enter::Send {End}{Enter}
 
-LCtrl & L::Send {End}
-LCtrl & H::Send {Home}
+;Adjust Win7 windowPane
+	#h::#Left
+	#r::#Right
+	#c::#Up
 
-Shift & Enter::Send {End}{Enter}
-;RAlt & $::Send {Home}
-!c::Send, +{Home}
-;RAlt & $::Send +{Home}
-;RAlt & &::Send {End}
-;LCtrl & )::Send ^{Left}
-LAlt & )::Send ^{Left}
-LAlt & ]::Send ^{Right}
-LCtrl & +::Send ^{BS}
-
-;LCtrl & ]::Send +{Up}
-
-LCtrl & #::Send {Right}
-LAlt & #::Send +{Right}
-LCtrl & !::Send {Right}
-LAlt & !::Send +{Right}
-
-
-insert::tab
-
-;SendInput hei
-;SendInput chr
-
+;Setup Daily Planner (Can't indent for style convention)
 :*:]]+:: 
 (
 7:00AM
@@ -107,51 +92,95 @@ insert::tab
 11:00PM
 )
 
-:*:]]]:: 
-FormatTime, CurrentDateTime,,h:mm tt
-SendInput %CurrentDateTime%
-return
+;Insert Current Date
+	:*:]]t:: 
+	FormatTime, CurrentDateTime,,ddddd MMMM dd, yyyy 
+	SendInput %CurrentDateTime%
+	return
 
-:*:$$$$:: 
-SendInput /*================================================*/
-return
+;Insert Current Time
+	:*:]]]:: 
+	FormatTime, CurrentDateTime,,h:mm tt
+	SendInput %CurrentDateTime%
+	return
 
-:*:[x:: 
-SendInput [x]
-return
+;Insert tomorrow's Time
+	:*:]]d::
+	tomorrow := a_now
+	tomorrow += 1, days
+	formattime, tomorrow, %tomorrow%, dddd, MMMM dd, yyyy
+	SendInput %tomorrow%
+	return
+
+;Insert Seperator
+	:*:$$$$:: 
+	SendInput /*================================================*/
+	return
+
+;completed Checkbox, may be useless
+	:*:[x:: 
+	SendInput [x]
+	return
+
+;Close Square brackets by double-typing
+	:*:[[::
+	SendInput []
+	return
+
+;Open Inbox
+	#.::Run explorer.exe C:\inbox
+	#e::Run explorer.exe C:\inbox
+
+;Uncomment to Swap U and O 
+	;o::u
+	;u::o
+
+;Do I need this(it wasn't commented out till now)
+	;LCtrl & #::Send {Right}
+	;LAlt & #::Send +{Right}
+	;LCtrl & !::Send {Right}
+	;LAlt & !::Send +{Right}
+	;!c::Send, +{Home}
 
 
-:*:]]t:: 
-FormatTime, CurrentDateTime,,ddddd MMMM dd, yyyy 
-SendInput %CurrentDateTime%
-return
 
-:*:]]d::
-tomorrow := a_now
-tomorrow += 1, days
-formattime, tomorrow, %tomorrow%, dddd, MMMM dd, yyyy
-SendInput %tomorrow%
-return
+;Past scripts (Delete later?)
+	;BackSpace::Capslock
+	;CapsLock::BackSpace
 
-:*:[[::
-SendInput []
-return
+	;Shift & BS::Send {Left}
+	;Alt & CapsLock::Send {Left}
 
-;o::u
-;u::o
+	;!+h::Send, +{Left}
+	;LAlt & H::Send {Left}
+	;LAlt & L::Send {Right}
 
-;^!n::
-;IfWinExist Untitled - Notepad
-;	WinActivate
-;else
-;	Run Notepad
-;return
+	;LAlt & r::Send, {Up}
 
-#h::#Left
-#r::#Right
-#c::#Up
-;#l::Send {#Right} ;this will not work, winkey+l and winkey+u cannot be overriden 
-#.::Run explorer.exe C:\inbox
-#e::Run explorer.exe C:\inbox
+	;LAlt & c::Send, {Down}
 
+	;LAlt & ]::Send {Up}
+	;LAlt & +::Send {Down}
+
+	;Shift & Space::Send {Right}
+
+	;RAlt & $::Send {Home}
+
+	;RAlt & $::Send +{Home}
+	;RAlt & &::Send {End}
+	;LCtrl & )::Send ^{Left}
+
+	;LCtrl & ]::Send +{Up}
+
+	;SendInput hei
+	;SendInput chr
+
+	;^!n::
+	;IfWinExist Untitled - Notepad
+	;	WinActivate
+	;else
+	;	Run Notepad
+	;return
+
+	;#l::Send {#Right} ;this will not work, winkey+l and winkey+u cannot be overriden 
 
