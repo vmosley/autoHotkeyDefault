@@ -15,8 +15,11 @@
 
 ;defaults
 	;#z::Run www.autohotkey.com
-	#SingleInstance force
+	;#SingleInstance force
 
+;Page Up and Page Down
+	LCtrl & !::Send {PgUp}
+	LCtrl & #::Send {PgDn}
 
 ;Insert now equals Tab
 	insert::tab
@@ -29,12 +32,14 @@
 	LCtrl & L::Send {End}
 	LCtrl & H::Send {Home}
 
-;Backspace and Enter
-	LAlt & +::Send {BS}
+
+;Del Backspace and Enter
+	;LAlt & +::Send {BS}
+	LAlt & +::Send {del}
 	LCtrl & ]::Send {Enter}
 
-;Ctrl Backspace (key 9)
-	LCtrl & +::Send ^{BS}
+;Ctrl Del (key 9)
+	LCtrl & +::Send ^{Del}
 
 ;Basic Arrows1
 	F9::Left
@@ -128,8 +133,8 @@
 	return
 
 ;Open Inbox
-	#.::Run explorer.exe C:\inbox
-	#e::Run explorer.exe C:\inbox
+	;#.::Run explorer.exe C:\inbox
+	;#e::Run explorer.exe C:\inbox
 
 ;Uncomment to Swap U and O 
 	;o::u
