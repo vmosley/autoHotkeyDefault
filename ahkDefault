@@ -17,12 +17,38 @@
 	;#z::Run www.autohotkey.com
 	;#SingleInstance force
 
+;Hopefully remaps the printscreen to contextKey
+	PrintScreen::AppsKey
+
+;Insert to printscreen
+	Insert::PrintScreen
+
+;Numbers
+; 	RAlt & `;::Send {1}
+;	RAlt & ,::Send {2}
+;	RAlt & .::Send {3}
+;	RAlt & p::Send {4}
+;	RAlt & a::Send {5}
+;	RAlt & u::Send {6}
+;	RAlt & e::Send {7}
+;	RAlt & o::Send {8}
+;	RAlt & i::Send {9}
+;	RAlt & i::Send {0}
+
+
+
+;F1 now equals F2
+	F1::F2
+
 ;Page Up and Page Down
 	LCtrl & !::Send {PgUp}
 	LCtrl & #::Send {PgDn}
 
 ;Insert now equals Tab
-	insert::tab
+;	insert::tab
+
+;F4 now equals Tab
+;	F4::tab
 
 ;Swap right-side alt and ctrl
 	RCtrl::RAlt
@@ -54,7 +80,7 @@
 	<!c::Send, {Down}
 	;LShift & Space::Send, ^{Right}
 
-	
+
 ;Highlight Arrows
 	<!<+h::Send, +{Left}
 	<!<+l::Send, +{Right}
@@ -68,43 +94,49 @@
 	;!^l::Send, ^{Right}
 
 ;Start Blank Line below
-	Shift & Enter::Send {End}{Enter}
+	;Shift & Enter::Send {End}{Enter}
 
 ;Adjust Win7 windowPane
 	#h::#Left
 	#r::#Right
 	#c::#Up
 
-;Setup Daily Planner (Can't indent for style convention)
-:*:]]+:: 
-(
-7:00AM
-8:00AM
-9:00AM
-10:00AM
-11:00AM
-12:00PM
-1:00PM
-2:00PM
-3:00PM
-4:00PM
-5:00PM
-6:00PM
-7:00PM
-8:00PM
-9:00PM
-10:00PM
-11:00PM
-)
+;? test
+;	:*:....::
+;	SendInput ?
+;	return 
+
 
 ;Insert Current Date
-	:*:]]t:: 
-	FormatTime, CurrentDateTime,,ddddd MMMM dd, yyyy 
+	:*:theyear::
+	;FormatTime, CurrentDateTime,,ddddd MMMM dd, yyyy
+	FormatTime, CurrentDateTime,,yyyy
+	SendInput %CurrentDateTime%
+	return
+
+;Insert Current Date
+	:*:thedate::
+	;FormatTime, CurrentDateTime,,ddddd MMMM dd, yyyy
+	FormatTime, CurrentDateTime,,MM_dd_yyyy
+	SendInput %CurrentDateTime%
+	return
+
+;Insert Current Date
+	:*:theday::
+	;FormatTime, CurrentDateTime,,ddddd MMMM dd, yyyy
+	FormatTime, CurrentDateTime,,MM/dd/yyyy
+	SendInput %CurrentDateTime%
+	return
+
+;Insert Current Date
+	:*:]]t::
+	FormatTime, CurrentDateTime,,ddddd MMMM dd, yyyy
+	;FormatTime, CurrentDateTime,,yyyy
 	SendInput %CurrentDateTime%
 	return
 
 ;Insert Current Time
-	:*:]]]:: 
+	:*:]]]::
 	FormatTime, CurrentDateTime,,h:mm tt
 	SendInput %CurrentDateTime%
 	return
@@ -118,12 +150,12 @@
 	return
 
 ;Insert Seperator
-	:*:$$$$:: 
+	:*:$$$$::
 	SendInput /*================================================*/
 	return
 
 ;completed Checkbox, may be useless
-	:*:[x:: 
+	:*:[x::
 	SendInput [x]
 	return
 
@@ -136,7 +168,7 @@
 	;#.::Run explorer.exe C:\inbox
 	;#e::Run explorer.exe C:\inbox
 
-;Uncomment to Swap U and O 
+;Uncomment to Swap U and O
 	;o::u
 	;u::o
 
@@ -187,5 +219,4 @@
 	;	Run Notepad
 	;return
 
-	;#l::Send {#Right} ;this will not work, winkey+l and winkey+u cannot be overriden 
-
+	;#l::Send {#Right} ;this will not work, winkey+l and winkey+u cannot be overriden
